@@ -10,7 +10,6 @@ using System.Windows.Forms;
 
 
 using System.Diagnostics;
-using System.Threading;
 using Microsoft.Win32;
 
 namespace ThreeButtons
@@ -18,6 +17,7 @@ namespace ThreeButtons
     public partial class Form1 : Form
     {
         string KeyAddress = "HKEY_CURRENT_USER\\Software\\NordsonTest";
+        bool Finish = false;
 
         public Form1()
         {
@@ -27,18 +27,33 @@ namespace ThreeButtons
             if (SubKey == null)
             {
                 Registry.CurrentUser.CreateSubKey("Software\\NordsonTest");
-                Registry.SetValue(KeyAddress, "NewExecution", "Yes");
+                Registry.SetValue(KeyAddress, "Situation", "Yes");
             }
 
-            // If new execution accrues, it changes the key value in the registry and the main form checks this key value
-            if (Process.GetProcessesByName(Process.GetCurrentProcess().ProcessName).Length > 1)
+
+            string[] args = Environment.GetCommandLineArgs();
+            if (args.Length > 1)
             {
-                Registry.SetValue(KeyAddress, "NewExecution", "Yes");
-                Environment.Exit(0);
-                Application.Exit();
+                InitializeComponent();
+                this.Text = "Instance";
+                NewRunTimer.Interval = 10;
             }
-            InitializeComponent();
+            else
+            {
+
+                // If new execution accrues, it changes the key value in the registry and the main form checks this key value
+                if (Process.GetProcessesByName(Process.GetCurrentProcess().ProcessName).Length > 1)
+                {
+                    Registry.SetValue(KeyAddress, "Situation", "Yes");
+                    Environment.Exit(0);
+                    Application.Exit();
+                }
+                InitializeComponent();
+                NewRunTimer.Interval = 100;
+                this.Text = "Main";
+            }
             NewRunTimer.Enabled = true;
+
         }
 
         private void btnTerminate_Click(object sender, EventArgs e)
@@ -50,39 +65,56 @@ namespace ThreeButtons
             }
             else
             {
-                Application.ExitThread();
+                Application.Exit();
             }
         }
 
         private void btnNewInstance_Click(object sender, EventArgs e)
         {
-            // starta new instance of this form with title of Instance
-            new Thread(() => {
-                Form1 NewForm = new Form1();
-                NewForm.Text = "Instance";
-                Application.Run(NewForm);
-
-            }).Start();
+            // start a new instance of this form with title of Instance
+            System.Diagnostics.Process.Start("Threebuttons.exe", "Instance");
         }
 
         private void btnCloseAll_Click(object sender, EventArgs e)
         {
-            Environment.Exit(0);
+            Registry.SetValue(KeyAddress, "Situation", "Close");
         }
 
         private void NewRunTimer_Tick(object sender, EventArgs e)
         {
             if (this.Text == "Main")
             {
-                if (Registry.GetValue(KeyAddress, "NewExecution", "No").ToString() == "Yes")
+                if (Registry.GetValue(KeyAddress, "Situation", "No").ToString() == "Yes")
                 {
-                    // New execution changes "NewExecution" key in registery and here we know that new execution happened. 
+                    // New execution changes "Situation" key in registery and here we know that new execution happened. 
                     // then restore the main form and bring it to the top of Z-order
-                    Registry.SetValue(KeyAddress, "NewExecution", "No");
+                    Registry.SetValue(KeyAddress, "Situation", "No");
                     this.Visible = true;
                     this.Activate();
                 }
+
+                if (Registry.GetValue(KeyAddress, "Situation", "No").ToString() == "Close" && Finish == true)
+                {
+                    Registry.SetValue(KeyAddress, "Situation", "No");
+                    NewRunTimer.Enabled = false;
+                    Application.ExitThread();
+                    Environment.Exit(0);
+                }
+
+                if (Registry.GetValue(KeyAddress, "Situation", "No").ToString() == "Close" )
+                {
+                    Finish = true;
+                }
             }
+            else
+            {
+                if (Registry.GetValue(KeyAddress, "Situation", "No").ToString() == "Close")
+                {
+                    Application.Exit();
+                }
+            }
+
+
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
