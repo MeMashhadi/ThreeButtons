@@ -7,3 +7,12 @@ D:\Projects\72 - Nordson\Try1\Threebuttons\Threebuttons\obj\Debug\Threebuttons.P
 D:\Projects\72 - Nordson\Try1\Threebuttons\Threebuttons\obj\Debug\Threebuttons.csproj.GenerateResource.Cache
 D:\Projects\72 - Nordson\Try1\Threebuttons\Threebuttons\obj\Debug\Threebuttons.exe
 D:\Projects\72 - Nordson\Try1\Threebuttons\Threebuttons\obj\Debug\Threebuttons.pdb
+D:\Projects\72 - Nordson\Try2\ThreeButtons\Threebuttons\bin\Debug\Threebuttons.exe.config
+D:\Projects\72 - Nordson\Try2\ThreeButtons\Threebuttons\obj\Debug\Threebuttons.exe
+D:\Projects\72 - Nordson\Try2\ThreeButtons\Threebuttons\obj\Debug\Threebuttons.pdb
+D:\Projects\72 - Nordson\Try2\ThreeButtons\Threebuttons\bin\Debug\Threebuttons.exe
+D:\Projects\72 - Nordson\Try2\ThreeButtons\Threebuttons\bin\Debug\Threebuttons.pdb
+D:\Projects\72 - Nordson\Try2\ThreeButtons\Threebuttons\obj\Debug\Threebuttons.csprojResolveAssemblyReference.cache
+D:\Projects\72 - Nordson\Try2\ThreeButtons\Threebuttons\obj\Debug\ThreeButtons.Form1.resources
+D:\Projects\72 - Nordson\Try2\ThreeButtons\Threebuttons\obj\Debug\Threebuttons.Properties.Resources.resources
+D:\Projects\72 - Nordson\Try2\ThreeButtons\Threebuttons\obj\Debug\Threebuttons.csproj.GenerateResource.Cache

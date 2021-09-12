@@ -91,6 +91,7 @@ namespace ThreeButtons
                     Registry.SetValue(KeyAddress, "Situation", "No");
                     this.Visible = true;
                     this.Activate();
+                    this.Focus();
                 }
 
                 if (Registry.GetValue(KeyAddress, "Situation", "No").ToString() == "Close" && Finish == true)
